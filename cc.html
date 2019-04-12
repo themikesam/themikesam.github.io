@@ -386,8 +386,23 @@
                     // console.log(call);
                     tel += call;
                     // console.log(tel);
-                    if (currDay == 0 || currDay == -1 || currDay == 7 || currDay == 6 || pointer != 1 ||
-                        pointer != 2) {
+                    if (pointer == 1 || pointer == 2) {
+                        if (currDay == 0 || currDay == -1 || currDay == 7 || currDay == 6) {
+                            $("#notice").show();
+                            $('#contact').html('工讀生：' + tester);
+                            $('#call').text('撥打：' + data.details[0][tester].Tel);
+                            $("#call_link").attr("href", "tel:" + data.details[0][tester].Tel);
+                            $('#messenger').text('透過 FB 私訊');
+                            $("#messenger_link").attr("href", "https://m.me/" + data.details[0][tester]
+                                .Messenger);
+                        } else {
+                            $('#contact').html(tester);
+                            $('#call').text('撥打：' + data.details[0][tester].Tel);
+                            $("#call_link").attr("href", "tel" + data.details[0][tester].Tel);
+                            $('#messenger').text('');
+                            $("#messenger_link").attr("href", "#");
+                        }
+                    } else {
                         $("#notice").show();
                         $('#contact').html('工讀生：' + tester);
                         $('#call').text('撥打：' + data.details[0][tester].Tel);
@@ -395,12 +410,6 @@
                         $('#messenger').text('透過 FB 私訊');
                         $("#messenger_link").attr("href", "https://m.me/" + data.details[0][tester]
                             .Messenger);
-                    } else {
-                        $('#contact').html(tester);
-                        $('#call').text('撥打：' + data.details[0][tester].Tel);
-                        $("#call_link").attr("href", "tel" + data.details[0][tester].Tel);
-                        $('#messenger').text('');
-                        $("#messenger_link").attr("href", "#");
                     }
                     // window.location.href = tel;
                     // console.log(data);
