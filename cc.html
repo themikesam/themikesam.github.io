@@ -8,7 +8,8 @@
     <meta name="description" content="用於暨大計網中心諮詢組電腦教室可以快速諮詢用">
     <meta name="keywords" content="計中,諮詢組,暨南大學">
     <meta name="author" content="themikesam">
-    <link href="https://sgs.student.ncnu.edu.tw/templates/jsn_megazine_pro/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
+    <link href="https://sgs.student.ncnu.edu.tw/templates/jsn_megazine_pro/favicon.ico" rel="shortcut icon"
+        type="image/vnd.microsoft.icon">
     <title>計網中心 — 諮詢組</title>
 
     <!-- Bootstrap CSS CDN -->
@@ -94,19 +95,31 @@
                 padding: 0px;
                 padding-left: 5px;
             }
+
             .list-group {
                 text-align: center;
             }
+
             .list-group-item {
                 padding: .5rem .5rem;
                 text-align: center;
             }
+
             .list-group-item-action {
                 width: 85%;
             }
+
             /* *, ::after, ::before {
                 box-sizing: none;
             }    */
+        }
+
+        #scroll {
+            overflow-y: scroll;
+            overflow: auto;
+            -webkit-overflow-scrolling: touch;
+            height: calc(100vh - 80px);
+            vertical-align: top;
         }
     </style>
 </head>
@@ -126,8 +139,7 @@
                 </div>
             </div>
             <div class="col-lg-8 col-md-10 col-8">
-                <div data-spy="scroll" data-target="#title" data-offset="10" class="scrollspy-example" style="height:calc(100vh - 50px);overflow-y:scroll;overflow: auto;
-                    -webkit-overflow-scrolling: touch;">
+                <div data-spy="scroll" data-target="#title" data-offset="10" class="scrollspy-example" id="scroll">
                     <div id="list-item-1" class="card">
                         <div class="card-header">
                             聯繫方式
@@ -137,7 +149,7 @@
                             <p class="card-text">請點擊以下方式聯繫</p>
                             <b id="notice">P/S：若電話無法撥通，或許是訊號不佳所致，可嘗試使用FB私訊聯繫</b>
                             <a href="#" id="call_link" class="card-link"><span id="call"
-                                    class="badge badge-success"></span></a><br/>
+                                    class="badge badge-success"></span></a><br />
                             <a href="#" id="messenger_link" class="card-link"><span id="messenger"
                                     class="badge badge-primary"></span></a>
 
@@ -362,18 +374,18 @@
                             break;
                     }
 
-                    console.log(data);
-                    console.log('---現在---星期：' + currDay + '時段：' + currHour);
+                    // console.log(data);
+                    // console.log('---現在---星期：' + currDay + '時段：' + currHour);
                     // console.log(currDay);
                     // console.log(currHour);
                     var tester = data.duty[day][0][duty[pointer]];
-                    console.log(tester);
-                    console.log(data.details[0][tester].Tel);
-                    console.log(data.details[0][tester].Messenger);
+                    // console.log(tester);
+                    // console.log(data.details[0][tester].Tel);
+                    // console.log(data.details[0][tester].Messenger);
                     call = (data.details[0][tester].Tel);
-                    console.log(call);
+                    // console.log(call);
                     tel += call;
-                    console.log(tel);
+                    // console.log(tel);
                     if (currDay == 0 || currDay == -1 || currDay == 7 || currDay == 6 || pointer != 1 ||
                         pointer != 2) {
                         $("#notice").show();
