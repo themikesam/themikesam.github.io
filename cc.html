@@ -427,7 +427,7 @@
             } else {
               $('#contact').html(tester);
               $('#call').text('撥打：' + data.details[0][tester].Tel);
-              $("#call_link").attr("href", "tel" + data.details[0][tester].Tel);
+              $("#call_link").attr("href", "tel:" + data.details[0][tester].Tel);
               $('#messenger').text('');
               $("#messenger_link").attr("href", "#");
             }
