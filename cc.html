@@ -331,6 +331,7 @@
     var continent = [];
     var item = '';
     var tel = "tel:";
+    var console;
 
     function addData(count, post) {
       // post.photo // post.job // post.name // post.phone // post.email // post.service
@@ -416,7 +417,7 @@
           // console.log(currHour);
           var tester = data.duty[day][0][duty[pointer]];
           // console.log(tester);
-          console.log(data.details[0][tester].Tel);
+          console = data;
           // console.log(data.details[0][tester].Messenger);
           call = (data.details[0][tester].Tel);
           // console.log(call);
