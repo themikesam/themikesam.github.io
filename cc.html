@@ -455,12 +455,18 @@
           // alert('抓取失敗');
         },
         complete: function (data) {
+          end = new Date();
+          duration = end - start;
+          console.log('start: '+start,'end: '+end,'duration: '+duration+'ms');
           $("#disable").hide(500);
           $("#loading").hide(1000);
         }
       });
     }
     $(document).ready(function () {
+      var start = new Date();
+      var end;
+      var duration;
       getPosts();
     });
   </script>
