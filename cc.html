@@ -320,6 +320,9 @@
   <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js">
   </script>
   <script>
+    var start = new Date();
+    var end;
+    var duration;
     var mytable;
     var national = [];
     var continent = [];
@@ -464,9 +467,6 @@
       });
     }
     $(document).ready(function () {
-      var start = new Date();
-      var end;
-      var duration;
       getPosts();
     });
   </script>
