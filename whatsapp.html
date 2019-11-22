@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+  Paste number inside the textbox. <br/>
+  <!-- <input type="radio" name="country" value="+65">Singapore &nbsp;&nbsp;&nbsp;
+  <input type="radio" name="country" value="+6" checked>Malaysia <br/> -->
+  <input type="checkbox" name="init_message" value="Hi there, who is calling? What can i assist?%0a请问是谁？">asking who calling <br/>
+  <input type="text" name="phone" pattern="[A-Za-z]{3}" title="paste phone number here">
+  <input type="submit" onclick="myFunction()">
+
+</body>
+<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+<script>
+    function myFunction() {
+        // $("input[type='radio'][name='country']:checked").val()
+        var number = $("input[name='phone']").val();
+        var msg = '';
+        var url = 'https://api.whatsapp.com/send?';
+        if ($("input[name='init_message'").is(":checked")){
+            // msg = encodeURI($("input[name='init_message'").val());
+            msg = ($("input[name='init_message'").val());
+        }
+        url=url+'phone='+number+'&text='+msg;
+        location.href = url;
+    }
+    $(document).ready(function(){
+        console.log('jquery_ready');   
+    });
+</script>
+</html>
