@@ -14,6 +14,7 @@
   <input type="submit" onclick="myFunction()">
   
   <p id="show"></p>
+  <p id="show2"></p>
 </body>
 <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
 <script>
@@ -36,13 +37,13 @@
     });
   function normalpaste() {
   const text = await navigator.clipboard.readText();
-    $('#show').val(text);
-    console.log('normalpaste'+text);
+    $('#show2').val(text);
+    console.text('normalpaste'+text);
 }
     async function paste() {
       const text = await navigator.clipboard.readText();
       console.log(text);
-      $('#show').val(text);
+      $('#show').text(text);
       document.getElementById("contact_num").value = text;
     }
     function empty(){
