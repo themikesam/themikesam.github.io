@@ -5,8 +5,12 @@
   Paste number inside the textbox. <br/>
   <!-- <input type="radio" name="country" value="+65">Singapore &nbsp;&nbsp;&nbsp;
   <input type="radio" name="country" value="+6" checked>Malaysia <br/> -->
-  <input type="checkbox" name="init_message" value="Hi there, who is calling? What can i assist?%0a请问是谁？">asking who calling <br/>
-  <input type="text" name="phone" pattern="[A-Za-z]{3}" title="paste phone number here">
+  <input type="checkbox" name="init_message" value="Hi there, who is calling? What can i assist?%0a你好，請問是誰撥打這個號碼呢？我有什麼可以幫到你的嗎？">asking who calling <br/>
+  <input type="checkbox" name="init_message" value="Hi there, i will call u later%0a你好，我等下再回撥電給你">redial later <br/>
+  <input type="checkbox" name="init_message" value="">Empty <br/>
+  <input type="text" id="contact_num" name="phone" pattern="[A-Za-z]{3}" title="paste phone number here">
+  <button onclick="paste()">Paste</button>
+  <button onclick="empty()">Empty</button>
   <input type="submit" onclick="myFunction()">
 
 </body>
@@ -27,5 +31,12 @@
     $(document).ready(function(){
         console.log('jquery_ready');   
     });
+    async function paste() {
+      const text = await navigator.clipboard.readText();
+      document.getElementById("contact_num").value = text;
+    }
+    function empty(){
+      document.getElementById("contact_num").value = '';
+    }
 </script>
 </html>
