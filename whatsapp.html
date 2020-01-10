@@ -36,7 +36,7 @@
         console.log('jquery_ready');
     });
   function normalpaste() {
-  const text = await navigator.clipboard.readText();
+    const text = navigator.clipboard.readText();
     $('#show2').val(text);
     console.text('normalpaste'+text);
 }
