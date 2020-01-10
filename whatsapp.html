@@ -30,9 +30,15 @@
         location.href = url;
     }
     $(document).ready(function(){
+      normalpaste();
         paste();
         console.log('jquery_ready');
     });
+  function normalpaste() {
+  const text = await navigator.clipboard.readText();
+    $('#show').val(text);
+    console.log('normalpaste'+text);
+}
     async function paste() {
       const text = await navigator.clipboard.readText();
       console.log(text);
