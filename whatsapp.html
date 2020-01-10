@@ -12,7 +12,8 @@
   <button onclick="paste()">Paste</button>
   <button onclick="empty()">Empty</button>
   <input type="submit" onclick="myFunction()">
-
+  
+  <p id="show"></p>
 </body>
 <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
 <script>
@@ -30,10 +31,12 @@
     }
     $(document).ready(function(){
         paste();
-        console.log('jquery_ready');   
+        console.log('jquery_ready');
     });
     async function paste() {
       const text = await navigator.clipboard.readText();
+      console.log(text);
+      $('#show').val(text);
       document.getElementById("contact_num").value = text;
     }
     function empty(){
