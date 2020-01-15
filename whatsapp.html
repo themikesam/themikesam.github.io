@@ -1,53 +1,91 @@
 <!DOCTYPE html>
 <html>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <body>
-
-  Paste number inside the textbox. <br/>
+<div class="container" style="margin: auto auto;">
+  <h3>Paste number inside the textbox. </h3>
   <!-- <input type="radio" name="country" value="+65">Singapore &nbsp;&nbsp;&nbsp;
   <input type="radio" name="country" value="+6" checked>Malaysia <br/> -->
-  <input type="checkbox" name="init_message" value="Hi there, who is calling? What can i assist?%0a你好，請問是誰撥打這個號碼呢？我有什麼可以幫到你的嗎？">asking who calling <br/>
-  <input type="checkbox" name="init_message" value="Hi there, i will call u later%0a你好，我等下再回撥電給你">redial later <br/>
-  <input type="checkbox" name="init_message" value="">Empty <br/>
-  <input type="text" id="contact_num" name="phone" pattern="[A-Za-z]{3}" title="paste phone number here">
-  <button onclick="paste()">Paste</button>
-  <button onclick="empty()">Empty</button>
-  <input type="submit" onclick="myFunction()">
-  
-  <p id="show"></p>
-  <p id="show2"></p>
+  <div class="input-group">
+    <div class="input-group-prepend">
+      <div class="input-group-text">
+      <input type="radio" name="wa_msg" value="Hi there, who is calling? What can i assist?%0a你好，請問是誰撥打這個號碼呢？我有什麼可以幫到你的嗎？">
+      </div>
+    </div>
+    <input type="text" disabled class="form-control" placeholder="Asking who is calling">
+  </div>
+  <div class="input-group">
+    <div class="input-group-prepend">
+      <div class="input-group-text">
+      <input type="radio" name="wa_msg" value="Hi there, i will call u later%0a你好，我等下再回撥電給你">
+      </div>
+    </div>
+    <input type="text" disabled class="form-control" placeholder="Redial Later">
+  </div>
+  <div class="input-group">
+    <div class="input-group-prepend">
+      <div class="input-group-text">
+      <input type="radio" name="wa_msg" value="">
+      </div>
+    </div>
+    <input type="text" disabled class="form-control" placeholder="Input by self">
+  </div>
+  <input type="text" class="form-control" id="contact_num" name="phone" pattern="[A-Za-z]{3}" title="paste phone number here">
+  <button class="btn btn-info" onclick="paste()">Paste</button>
+  <button class="btn btn-warning" onclick="empty()">Empty</button>
+  <input class="btn btn-success" type="submit" onclick="sendWhatsapp()">
+  <figure class="highlight mt-2">
+    <pre>Clipboard Value:
+      <code id="clipboard_value">output of clipboard value.</code>
+    </pre>
+  </figure>
+  <figure class="highlight">
+    <pre>Whatsapp Message:
+      <code id="wa_value">output of clipboard value.</code>
+    </pre>
+  </figure>
+
+</div>
 </body>
 <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
 <script>
-    function myFunction() {
-        // $("input[type='radio'][name='country']:checked").val()
-        var number = $("input[name='phone']").val();
-        var msg = '';
-        var url = 'https://api.whatsapp.com/send?';
-        if ($("input[name='init_message'").is(":checked")){
-            // msg = encodeURI($("input[name='init_message'").val());
-            msg = ($("input[name='init_message'").val());
-        }
-        url=url+'phone='+number+'&text='+msg;
-        location.href = url;
+    function sendWhatsapp() {
+      var radioValue = $("input[name='wa_msg']:checked").val();
+      
+      var number = $("input[name='phone']").val();
+      if(number.charAt(0) == '0'){ number = '6'+number; }
+
+      var msg = '';
+
+      var url = 'https://api.whatsapp.com/send?';
+      if(radioValue){ msg = radioValue; }
+
+      location.href = url+'phone='+number+'&text='+msg;
     }
-    $(document).ready(function(){
-      normalpaste();
-        paste();
-        console.log('jquery_ready');
-    });
-  function normalpaste() {
-    const text = navigator.clipboard.readText();
-    $('#show2').text(text);
-    console.log('normalpaste'+text);
-}
-    async function paste() {
-      const text = await navigator.clipboard.readText();
-      console.log(text);
-      $('#show').text(text);
-      document.getElementById("contact_num").value = text;
-    }
+
     function empty(){
       document.getElementById("contact_num").value = '';
     }
+    
+    async function paste() {
+      const text = await navigator.clipboard.readText();
+      console.log(text);
+      $('#clipboard_value').text(text);
+      document.getElementById("contact_num").value = text;
+    };
+
+    $(document).ready(function(){
+      console.log('jquery ready');
+      paste();
+      $("input[name='wa_msg']").on('change',function(){
+        var radioValue = $("input[name='wa_msg']:checked").val();
+        $('#wa_value').text(radioValue);
+      })
+    });
+  
 </script>
 </html>
