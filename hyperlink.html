@@ -1,41 +1,56 @@
 <!DOCTYPE html>
 <html>
+
 <body>
-<textarea id="text-val" rows="4" style="height: 50vh; width:80vw; margin: auto !important;">[Google](www.google.com)</textarea><br/>
-<input type="button" id="dwn-btn" value="Download link as .HTML" style="height: 5vh; width:80vw;margin: 0 auto ;"/>
+  <textarea id="text-val" rows="4"
+    style="height: 50vh; width:80vw; margin: auto !important;">[Google](www.google.com)</textarea><br />
+  <input type="button" id="dwn-btn" value="Download link as .HTML" style="height: 5vh; width:80vw;margin: 0 auto ;" />
 </body>
+<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
 <script>
-function download(filename, input) {
+  $(document).ready(function () {
+    console.log('jquery ready');
+    paste();
+  });
+
+  function download(filename, input) {
     input.forEach(element => {
-        var patt = /\[(.*)\]\((.*)\)/i;
-        var result = element.match(patt);
-        var element = document.createElement('a');
+      var patt = /\[(.*)\]\((.*)\)/i;
+      var result = element.match(patt);
+      var element = document.createElement('a');
 
-        var link = result[2].length>0?result[2]:'www.google.com';
-        filename = result[1].length>0?result[1]:filename;
-        var text = '<meta http-equiv="refresh" content="0; url='+link+' "/>';
-        element.setAttribute('href', 'data:text/html;charset=utf-8,' + encodeURIComponent(text));
-        element.setAttribute('download', filename+'.html');
+      var link = result[2].length > 0 ? result[2] : 'www.google.com';
+      filename = result[1].length > 0 ? result[1] : filename;
+      var text = '<meta http-equiv="refresh" content="0; url=' + link + ' "/>';
+      element.setAttribute('href', 'data:text/html;charset=utf-8,' + encodeURIComponent(text));
+      element.setAttribute('download', filename + '.html');
 
-        element.style.display = 'none';
-        document.body.appendChild(element);
+      element.style.display = 'none';
+      document.body.appendChild(element);
 
-        element.click();
+      element.click();
 
-        document.body.removeChild(element);
+      document.body.removeChild(element);
     });
-    
-}
 
-// Start file download.
-document.getElementById("dwn-btn").addEventListener("click", function(){
+  }
+  async function paste() {
+    const text = await navigator.clipboard.readText();
+    console.log(text);
+    $('#clipboard_value').text(text);
+    document.getElementById("text-val").value = text;
+  };
+
+  // Start file download.
+  document.getElementById("dwn-btn").addEventListener("click", function () {
     // Generate download of hello.txt file with some content
-    
+
     var text = (document.getElementById("text-val").value).split('\n');
     console.log(text);
     var filename = "link.html";
-    
+
     download(filename, text);
-}, false);
+  }, false);
 </script>
 </html>
