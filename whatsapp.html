@@ -34,7 +34,7 @@
     </div>
     <input type="text" disabled class="form-control" placeholder="Input by self">
   </div>
-  <input type="text" class="form-control" id="contact_num" name="phone" pattern="[A-Za-z]{3}" title="paste phone number here">
+  <input type="text" class="form-control" id="contact_num" name="phone" pattern="[A-Za-z]{3}" placeholder="enter phone number or click paste button to read clipboard.">
   <button class="btn btn-info" onclick="paste()">Paste</button>
   <button class="btn btn-warning" onclick="empty()">Empty</button>
   <input class="btn btn-success" type="submit" onclick="sendWhatsapp()">
@@ -43,9 +43,14 @@
       <code id="clipboard_value">output of clipboard value.</code>
     </pre>
   </figure>
+  <figure class="highlight mt-2">
+    <pre>First number:
+      <code id="wa_number">output of first number in clipboard.</code>
+    </pre>
+  </figure>
   <figure class="highlight">
     <pre>Whatsapp Message:
-      <code id="wa_value">output of clipboard value.</code>
+      <code id="wa_value">Please choose from option.</code>
     </pre>
   </figure>
 
@@ -77,14 +82,15 @@
       $('#clipboard_value').text(text);
       text = text.replaceAll("-", "");
       text = text.replaceAll(" ", "");
-      var re = /.*([0-9]{8,12}).*/g;
+      var re = /.*?([0-9]{8,12}).*/g;
       var m;
       m = re.exec(text);
-      if(m[0].length >= 10){ // malaysia
-        text = '+6'+m[0];
+      if(m[1].length >= 10){ // malaysia
+        text = '+6'+m[1];
       } else if (m[0].length >= 8){ // singapore
-        text = '+6'+m[0];
+        text = '+65'+m[1];
       }
+      document.getElementById("wa_number").value = text;
       document.getElementById("contact_num").value = text;
     };
 
