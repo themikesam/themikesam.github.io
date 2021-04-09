@@ -77,7 +77,7 @@
     }
     
     async function paste() {
-      const text = await navigator.clipboard.readText();
+      var text = await navigator.clipboard.readText();
       console.log(text);
       $('#clipboard_value').text(text);
       text = text.replaceAll("-", "");
