@@ -75,6 +75,16 @@
       const text = await navigator.clipboard.readText();
       console.log(text);
       $('#clipboard_value').text(text);
+      text = text.replaceAll("-", "");
+      text = text.replaceAll(" ", "");
+      var re = /.*([0-9]{8,12}).*/g;
+      var m;
+      m = re.exec(text);
+      if(m[0].length >= 10){ // malaysia
+        text = '+6'+m[0];
+      } else if (m[0].length >= 8){ // singapore
+        text = '+6'+m[0];
+      }
       document.getElementById("contact_num").value = text;
     };
 
