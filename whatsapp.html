@@ -29,6 +29,14 @@
   <div class="input-group">
     <div class="input-group-prepend">
       <div class="input-group-text">
+      <input type="radio" name="wa_msg" value="Hi there, can I have more info of this?%0a你好，請問我可以詢問更多詳情嗎？">
+      </div>
+    </div>
+    <input type="text" disabled class="form-control" placeholder="Ask for Photos.">
+  </div>
+  <div class="input-group">
+    <div class="input-group-prepend">
+      <div class="input-group-text">
       <input type="radio" name="wa_msg" value="">
       </div>
     </div>
@@ -78,7 +86,7 @@
     
     async function paste() {
       var text = await navigator.clipboard.readText();
-      console.log(text);
+      // console.log(text);
       $('#clipboard_value').text(text);
       text = text.replaceAll("-", "");
       text = text.replaceAll(" ", "");
@@ -95,7 +103,7 @@
     };
 
     $(document).ready(function(){
-      console.log('jquery ready');
+      // console.log('jquery ready');
       paste();
       $("input[name='wa_msg']").on('change',function(){
         var radioValue = $("input[name='wa_msg']:checked").val();
