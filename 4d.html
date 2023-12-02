@@ -328,7 +328,7 @@
                 }
 
                 var calculationofCost = parseInt(big, 10) + parseInt(small, 10) + parseInt(threeWordsBig, 10) + parseInt(threeWordsSmall, 10);
-                var calculationText = `<span class="note-badge badge">${countOf4D} 打</span> * <span class="note-badge badge">${calculationofCost}</span> <code>${big}-${small}-${threeWordsText}</code>  * <span class="note-badge badge">${sidesText}</span>`;
+                var calculationText = `<span class="note-badge badge">${countOf4D} 打</span> * <span class="note-badge badge">${calculationofCost}</span> <code>${big}-${small}-${threeWordsText}</code>  * <span class="note-badge badge">${sidesText} 边</span>`;
                 var result = countOf4D * calculationofCost * (sides.length > 0 ? sides.length : 0);
                 total += result;
                 group.querySelector('.calculation').innerHTML = '$ ' + result + '  ( ' + calculationText + ')&nbsp;&nbsp;';
