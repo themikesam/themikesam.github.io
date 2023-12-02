@@ -7,6 +7,26 @@
     <title>4D号码计算器</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        /* On screens that are 600px or less, set the background color to olive */
+
+        @media screen and (max-width: 600px) {
+            .summary {
+                flex-direction: column;
+            }
+            input:checked+.multiple-slider:before {
+                transform: translateX(16px);
+            }
+        }
+
+        @media screen and (min-width: 601px) {
+            .summary {
+                flex-direction: row;
+            }
+            input:checked+.multiple-slider:before {
+                transform: translateX(33px);
+            }
+        }
+
         #form {
             max-width: 600px;
             margin: 0 auto;
@@ -30,6 +50,7 @@
             color: white;
             margin-right: 4px;
         }
+
         .combinations {
             margin-bottom: 0px!important;
         }
@@ -37,10 +58,11 @@
         .side-badge {
             background-color: #522875;
         }
-        
+
         .note-badge {
             background-color: #5a99e0;
         }
+
         .numberGroup {
             border: 1px solid #ccc;
             padding: 10px;
@@ -51,7 +73,7 @@
             gap: 10px;
         }
 
-        .numberGroup > * {
+        .numberGroup>* {
             flex-grow: 1;
             margin-bottom: 10px;
         }
@@ -91,14 +113,17 @@
             transition: .4s;
             border-radius: 34px;
             max-width: 100px;
+            min-width: 60px;
         }
 
         .multiple-slider:before {
             content: "全打";
         }
+
         .three-words-slider:before {
             content: "三个字";
         }
+
         .slider:before {
             position: absolute;
             height: 26px;
@@ -123,11 +148,11 @@
             content: "三个字";
             transform: translateX(10px);
         }
-        
+
         input:checked+.multiple-slider:before {
             content: "全打";
-            transform: translateX(33px);
         }
+
         input:checked+.slider:before {
             padding-right: 0;
             padding-left: 0px;
@@ -173,22 +198,21 @@
             font-size: 1.2em;
         }
 
-        
         .combinations {
             width: 100%;
             font-size: 10px;
             color: #aaa;
         }
-        
+
         .summary {
             width: 100%;
             margin-bottom: 0px;
         }
-        
+
         .first-row {
             margin-bottom: 0px;
         }
-        
+
         #addNumberGroup {
             border-radius: 5px;
             border: 0px;
@@ -230,7 +254,7 @@
                 <input type="number" class="threeWordsBig" min=0 placeholder="三个字大" style="display: none;" onchange="calculate()">
                 <input type="number" class="threeWordsSmall" min=0 placeholder="三个字小" style="display: none;" onchange="calculate()">
             </div>
-            <div class="summary" style="display: flex; flex-direction: row; justify-content: space-between">
+            <div class="summary" style="display: flex; justify-content: space-between">
                 <div class="calculation"></div>
                 <div class="sides" style="flex: auto%;">
                     <input type="checkbox" id="toto-${uniqueId}" class="toto" onchange="calculate()">
@@ -256,8 +280,8 @@
             threeWordsSmall.style.display = checkbox.checked ? 'inline-block' : 'none';
             calculate();
         }
-        
-        function multipleCombination(){
+
+        function multipleCombination() {
             calculate();
         }
 
@@ -274,16 +298,16 @@
 
                 var combinations = calculateCombinations(fourDNumber);
                 var sidesText = sides.length > 0 ? ` * ${sides.length} <span class="side-badge badge">${sides.join('</span><span class="side-badge badge">')}</span>` : "";
-                sidesText = sides.length > 0?sides.length:0;
+                sidesText = sides.length > 0 ? sides.length : 0;
                 var threeWordsText = threeWords ? `${threeWordsBig}-${threeWordsSmall}` : "0-0";
-                 
-                var countOf4D = group.querySelector('.multipleCombination').checked ? combinations.length: fourDNumber == 0? 0:1;
-                if (countOf4D > 1){
-                    group.querySelector('.combinations').innerHTML = '<b>'+combinations.length +'</b>'+ ' 打: ' + combinations.join(', ');
+
+                var countOf4D = group.querySelector('.multipleCombination').checked ? combinations.length : fourDNumber == 0 ? 0 : 1;
+                if (countOf4D > 1) {
+                    group.querySelector('.combinations').innerHTML = '<b>' + combinations.length + '</b>' + ' 打: ' + combinations.join(', ');
                 } else {
                     group.querySelector('.combinations').innerHTML = '';
                 }
-                
+
                 var calculationofCost = parseInt(big, 10) + parseInt(small, 10) + parseInt(threeWordsBig, 10) + parseInt(threeWordsSmall, 10);
                 var calculationText = `<span class="note-badge badge">${countOf4D} 打</span> * <span class="note-badge badge">${calculationofCost}</span> <code>${big}-${small}-${threeWordsText}</code> <span class="note-badge badge">${sidesText}</span>`;
                 var result = countOf4D * calculationofCost * (sides.length > 0 ? sides.length : 1);
@@ -304,11 +328,11 @@
         function permutations(arr) {
             if (arr.length <= 2) return arr.length === 2 ? [arr.join(''), arr.reverse().join('')] : arr;
             return arr.reduce((
-                acc, item, i) =>
+                    acc, item, i) =>
                 acc.concat(permutations([...arr.slice(0, i), ...arr.slice(i + 1)]).map(val => item + val)), []);
         }
 
-        addNumberGroup();  // 初始化时添加一个数字组
+        addNumberGroup(); // 初始化时添加一个数字组
     </script>
 
 
