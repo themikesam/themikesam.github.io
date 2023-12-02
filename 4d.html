@@ -257,21 +257,21 @@
             var numberGroup = document.createElement('div');
             numberGroup.className = 'numberGroup';
             numberGroup.innerHTML = `
-            <input type="number" class="fourDNumber first-row" placeholder="4D号码" onchange="calculate()">
+            <input type="number" class="fourDNumber first-row" placeholder="4D号码" onkeyup="calculate()" onchange="calculate()">
             <label class="toggle first-row">
                 <input type="checkbox" class="multipleCombination" onchange="multipleCombination(this)">
                 <span class="multiple-slider slider round"></span>
             </label>
             <div class="combinations"></div>
             <div style="display: flex; gap: 10px;">
-                <input type="number" class="big" placeholder="大" min=0 onchange="calculate()">
-                <input type="number" class="small" placeholder="小" min=0 onchange="calculate()">
+                <input type="number" class="big" placeholder="大" min=0 onkeyup="calculate()" onchange="calculate()">
+                <input type="number" class="small" placeholder="小" min=0 onkeyup="calculate()" onchange="calculate()">
                 <label class="toggle">
                     <input type="checkbox" checked class="threeWords" onchange="toggleThreeWords(this)">
                     <span class="three-words-slider slider round"></span>
                 </label>
-                <input type="number" class="threeWordsBig" min=0 placeholder="三个字大" style="" onchange="calculate()">
-                <input type="number" class="threeWordsSmall" min=0 placeholder="三个字小" style="" onchange="calculate()">
+                <input type="number" class="threeWordsBig" min=0 placeholder="三个字大" style="" onkeyup="calculate()" onchange="calculate()">
+                <input type="number" class="threeWordsSmall" min=0 placeholder="三个字小" style="" onkeyup="calculate()" onchange="calculate()">
             </div>
             <div class="summary" style="display: flex; justify-content: space-between">
                 <div class="calculation"></div>
