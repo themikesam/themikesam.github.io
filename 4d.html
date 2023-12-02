@@ -222,7 +222,7 @@
     </style>
 </head>
 
-<body>
+<body onload="calculate()">
 
     <div id="form">
         <button type="button" id="addNumberGroup" class="add-btn">添加数字组</button>
@@ -248,11 +248,11 @@
                 <input type="number" class="big" placeholder="大" min=0 onchange="calculate()">
                 <input type="number" class="small" placeholder="小" min=0 onchange="calculate()">
                 <label class="toggle">
-                    <input type="checkbox" class="threeWords" onchange="toggleThreeWords(this)">
+                    <input type="checkbox" checked class="threeWords" onchange="toggleThreeWords(this)">
                     <span class="three-words-slider slider round"></span>
                 </label>
-                <input type="number" class="threeWordsBig" min=0 placeholder="三个字大" style="display: none;" onchange="calculate()">
-                <input type="number" class="threeWordsSmall" min=0 placeholder="三个字小" style="display: none;" onchange="calculate()">
+                <input type="number" class="threeWordsBig" min=0 placeholder="三个字大" style="" onchange="calculate()">
+                <input type="number" class="threeWordsSmall" min=0 placeholder="三个字小" style="" onchange="calculate()">
             </div>
             <div class="summary" style="display: flex; justify-content: space-between">
                 <div class="calculation"></div>
