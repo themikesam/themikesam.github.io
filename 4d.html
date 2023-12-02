@@ -9,6 +9,22 @@
     <style>
         /* On screens that are 600px or less, set the background color to olive */
 
+        body {
+            -webkit-touch-callout: none;
+            /* iOS Safari */
+            -webkit-user-select: none;
+            /* Safari */
+            -khtml-user-select: none;
+            /* Konqueror HTML */
+            -moz-user-select: none;
+            /* Old versions of Firefox */
+            -ms-user-select: none;
+            /* Internet Explorer/Edge */
+            user-select: none;
+            /* Non-prefixed version, currently
+                                      supported by Chrome, Edge, Opera and Firefox */
+        }
+
         @media screen and (max-width: 600px) {
             .summary {
                 flex-direction: column;
@@ -221,7 +237,6 @@
             border: 0px;
             padding: 5px 15px;
             margin-bottom: 15px;
-            background-color: #00bd00;
         }
     </style>
 </head>
@@ -313,8 +328,8 @@
                 }
 
                 var calculationofCost = parseInt(big, 10) + parseInt(small, 10) + parseInt(threeWordsBig, 10) + parseInt(threeWordsSmall, 10);
-                var calculationText = `<span class="note-badge badge">${countOf4D} 打</span> * <span class="note-badge badge">${calculationofCost}</span> <code>${big}-${small}-${threeWordsText}</code> <span class="note-badge badge">${sidesText}</span>`;
-                var result = countOf4D * calculationofCost * (sides.length > 0 ? sides.length : 1);
+                var calculationText = `<span class="note-badge badge">${countOf4D} 打</span> * <span class="note-badge badge">${calculationofCost}</span> <code>${big}-${small}-${threeWordsText}</code>  * <span class="note-badge badge">${sidesText}</span>`;
+                var result = countOf4D * calculationofCost * (sides.length > 0 ? sides.length : 0);
                 total += result;
                 group.querySelector('.calculation').innerHTML = '$ ' + result + '  ( ' + calculationText + ')&nbsp;&nbsp;';
             });
