@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4D号码计算器</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        #form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border-radius: 5px;
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .numberGroup {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .numberGroup > * {
+            flex-grow: 1;
+            margin-bottom: 10px;
+        }
+
+        .fourDNumber {
+            flex-grow: 2;
+        }
+
+        .toggle {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+            vertical-align: middle;
+        }
+        .numberGroup > div > input[type=number] {
+            flex: 1 0 auto!important;
+    width: 18%;
+    height: 30px;
+    font-size: 15px;
+    }
+input[type=checkbox], input[type=radio] {
+display:none;
+}
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "三个字";
+            height: 26px;
+            width: 48px;
+            left: 1px;
+            bottom: 2px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 30px;
+            text-align: center;
+            line-height: 30px;
+            font-size: 10px;
+            box-sizing: border-box;
+            padding-right: 0px;
+        }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+        input:checked + .slider:before {
+            content: "三个字";
+            transform: translateX(10px);
+            padding-right: 0;
+            padding-left: 0px;
+        }
+
+        .sides label {
+            background: #eee;
+            padding: 5px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color .3s, color .3s;
+            display: inline-block;
+            margin-right: 5px; /* For wrapping */
+        }
+
+        .sides input[type="checkbox"]:checked + label {
+            background: #007BFF;
+            color: white;
+        }
+
+        button.delete-btn {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        button.add-btn {
+            background-color: #17a2b8;
+            color: white;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        #totalAmount {
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .combinations, .calculation {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div id="form">
+    <button type="button" id="addNumberGroup" class="add-btn">添加数字组</button>
+    <div id="numberGroups"></div>
+    <div id="totalAmount">总金额: 0</div>
+</div>
+
+<script>
+    document.getElementById('addNumberGroup').addEventListener('click', addNumberGroup);
+
+    function addNumberGroup() {
+        var uniqueId = Date.now();
+        var numberGroup = document.createElement('div');
+        numberGroup.className = 'numberGroup';
+        numberGroup.innerHTML = `
+            <input type="number" class="fourDNumber" placeholder="4D号码" onchange="calculate()">
+            <div style="display: flex; gap: 10px;">
+                <input type="number" class="big" placeholder="大" onchange="calculate()">
+                <input type="number" class="small" placeholder="小" onchange="calculate()">
+                <label class="toggle">
+                    <input type="checkbox" class="threeWords" onchange="toggleThreeWords(this)">
+                    <span class="slider round"></span>
+                </label>
+                <input type="number" class="threeWordsBig" placeholder="三个字大" style="display: none;" onchange="calculate()">
+                <input type="number" class="threeWordsSmall" placeholder="三个字小" style="display: none;" onchange="calculate()">
+            </div>
+            <div class="sides" style="flex: 1 1 100%;">
+                <input type="checkbox" id="toto-${uniqueId}" class="toto" onchange="calculate()">
+                <label for="toto-${uniqueId}">Toto</label>
+                <input type="checkbox" id="damacai-${uniqueId}" class="damacai" onchange="calculate()">
+                <label for="damacai-${uniqueId}">Damacai</label>
+                <input type="checkbox" id="magnum-${uniqueId}" class="magnum" onchange="calculate()">
+                <label for="magnum-${uniqueId}">Magnum</label>
+            </div>
+            <button type="button" class="delete-btn" onclick="this.parentNode.remove(); calculate();">删除</button>
+            <div class="combinations">组合: </div>
+            <div class="calculation"></div>
+        `;
+        document.getElementById('numberGroups').appendChild(numberGroup);
+    }
+
+    function toggleThreeWords(checkbox) {
+        var threeWordsBig = checkbox.closest('.numberGroup').querySelector('.threeWordsBig');
+        var threeWordsSmall = checkbox.closest('.numberGroup').querySelector('.threeWordsSmall');
+        threeWordsBig.style.display = checkbox.checked ? 'inline-block' : 'none';
+        threeWordsSmall.style.display = checkbox.checked ? 'inline-block' : 'none';
+        calculate();
+    }
+
+    function calculate() {
+        var total = 0;
+        document.querySelectorAll('.numberGroup').forEach(group => {
+            var fourDNumber = group.querySelector('.fourDNumber').value || 0;
+            var big = group.querySelector('.big').value || 0;
+            var small = group.querySelector('.small').value || 0;
+            var threeWords = group.querySelector('.threeWords').checked;
+            var threeWordsBig = threeWords ? (group.querySelector('.threeWordsBig').value || 0) : 0;
+            var threeWordsSmall = threeWords ? (group.querySelector('.threeWordsSmall').value || 0) : 0;
+            var sides = Array.from(group.querySelectorAll('.toto:checked, .damacai:checked, .magnum:checked')).map(el => el.nextElementSibling.textContent.trim());
+            
+            var combinations = calculateCombinations(fourDNumber);
+            group.querySelector('.combinations').textContent = '组合: ' + combinations.join(', ');
+
+            var sidesText = sides.length > 0 ? ` * ${sides.length} <span class="badge">${sides.join('</span><span class="badge">')}</span>` : "";
+            var threeWordsText = threeWords ? ` + ${threeWordsBig} <span class="badge">三个字大</span> + ${threeWordsSmall} <span class="badge">三个字小</span>` : "";
+            var calculationText = `${combinations.length} <span class="badge">组合</span> * (${big} <span class="badge">大</span> + ${small} <span class="badge">小</span>${threeWordsText})${sidesText}`;
+            var result = combinations.length * (parseInt(big, 10) + parseInt(small, 10) + parseInt(threeWordsBig, 10) + parseInt(threeWordsSmall, 10)) * (sides.length > 0 ? sides.length : 1);
+            total += result;
+            group.querySelector('.calculation').innerHTML = '金额: ' + result + '<br>计算过程: ' + calculationText;
+        });
+        document.getElementById('totalAmount').textContent = '总金额: ' + total;
+    }
+
+    function calculateCombinations(number) {
+        if (!number) return [];
+        var digits = number.toString().split('');
+        var combinations = permutations(digits);
+        var uniqueCombinations = [...new Set(combinations)];
+        return uniqueCombinations;
+    }
+
+    function permutations(arr) {
+        if (arr.length <= 2) return arr.length === 2 ? [arr.join(''), arr.reverse().join('')] : arr;
+        return arr.reduce((
+acc, item, i) =>
+            acc.concat(permutations([...arr.slice(0, i), ...arr.slice(i + 1)]).map(val => item + val)), []);
+    }
+
+    addNumberGroup();  // 初始化时添加一个数字组
+</script>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
