@@ -264,7 +264,7 @@
                     <input type="checkbox" id="magnum-${uniqueId}" class="magnum" onchange="calculate()">
                     <label for="magnum-${uniqueId}">Magnum</label>
                 </div>
-                <button type="button" class="delete-btn" onclick="this.parentNode.remove(); calculate();">删除</button>
+                <button type="button" class="delete-btn" onclick="this.parentNode.parentNode.remove(); calculate();">删除</button>
             </div>
             
             
